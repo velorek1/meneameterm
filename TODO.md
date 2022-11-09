@@ -1,7 +1,7 @@
-TOP PRIORITY:
-*FIX MEMORY LEAKS!!! ESPECIALLY IN PARSE.C
-*FIX BUGS WITH UNICODE ESPACE STRINGS PARSING AND SPANISH ACCENTS
-*CLEAN CODE / REDUCE REDUNDACIES / WARNINGS ETC
+- Top priority:
+* fix memory leaks!!! Especially in parse.C
+* fix bugs with unicode espace strings parsing and spanish accents
+* clean code / reduce redundacies / warnings etc
 
-LESS PRIORITY:
-*ADD COMMENTS SECTION
+- Less priority:
+* add comments section
