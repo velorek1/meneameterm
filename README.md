@@ -1,6 +1,6 @@
 # meneameterm
 Meneame.net for Linux Terminals
-Classic Asteroid Game coded with SDL2 in C
+
 * Remember to install libcurl and libcurl-dev libraries to compile.
 
 TO COMPILE and RUN:  
