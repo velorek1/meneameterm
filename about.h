@@ -17,26 +17,27 @@
                      
 #define HLINE1  "   [+] M|E|N|E|A|M|E para T3rminal- by v3l0r3k   "
 #define HLINE2  "================================================="
-#define HLINE3  "Este programa es una [[demo]] que permite visuali"
-#define HLINE4  "zas las primeras 100 historias que aparecen en la"
-#define HLINE5  "portada de la pagina hispana https://meneame.net "                           
-#define HLINE6  "                                                 "                                                      
-#define HLINE7  "Teclas habituales:                               "                                                      
-#define HLINE8  "[Ctrl+C] Sale del programa en cualquier pantalla."           
-#define HLINE9  "[ESC] Regresa a la pantalla anterior o abandona. "           
-#define HLINE10 "[i] Abre cuadro de texto para ir a la noticia.   "           
-#define HLINE11 "[F1] Muestra la pantalla de ayuda.               "           
-#define HLINE12 "[CURSOR] Permite navegar textos con scroll.      "           
-#define HLINE13 "                                                 "           
-#define HLINE14 "Peace!                                           "           
-#define HLINE15 "Coded in [C] & [Vim] on Linux v0.1 2022          "           
+#define HLINE3  "Este programa es una [[demo]] que permite        "
+#define HLINE4  "visualizar las primeras 100 historias que        "
+#define HLINE5  "aparecen eb la portada de la pagina hispana      "                           
+#define HLINE6  "https://meneame.net                              "                                                      
+#define HLINE7  "                                                 "                                                      
+#define HLINE8  "Teclas habituales:                               "                                                      
+#define HLINE9  "[Ctrl+C] Sale del programa en cualquier pantalla."           
+#define HLINE10  "[ESC] Regresa a la pantalla anterior o abandona. "           
+#define HLINE11 "[i] Abre cuadro de texto para ir a la noticia.   "           
+#define HLINE12 "[F1] Muestra la pantalla de ayuda.               "           
+#define HLINE13 "[CURSOR] Permite navegar textos con scroll.      "           
+#define HLINE14 "                                                 "           
+#define HLINE15 "Peace!                                           "           
+#define HLINE16 "Coded in [C] & [Vim] on Linux v0.1 2022          "           
 
                                                  
 #define ABOUT_LENGTH 100
 #define ABOUT_LINES 6
 
 #define HELP_LENGTH 255
-#define HELP_LINES 15
+#define HELP_LINES 16
 
 
 
@@ -65,7 +66,8 @@ char help_msg[HELP_LINES][HELP_LENGTH] =
          HLINE12,
          HLINE13,
          HLINE14,
-         HLINE15
+         HLINE15,
+         HLINE16
 	 };
  
 #endif
