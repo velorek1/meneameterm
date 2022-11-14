@@ -18,7 +18,7 @@
 #include "about.h"
 #define STATUSMSG1 "^v NAVEGAR LISTA | F1: AYUDA | i: IR A | ESC: SALIR\0"
 #define STATUSMSG2 "INTRO: VER NOTICIA | RETROCESO: VOLVER | CTRL-C: SALIR\0"
-#define STATUSMSG3  "ESC/INTRO: VOLVER\0"
+#define STATUSMSG3  "ESC: VOLVER\0"
 
 char texto[MAX_TEXT]; 
 //Prototypes
@@ -150,7 +150,7 @@ int k=0;
   create_screen(&screen2);
   copy_screen(screen2,screen1);
   clean_bars();
-  write_str(screen1,54,2,"ESC|INTRO: VOLVER", B_BLACK, F_WHITE,FALSE);
+  write_str(screen1,54,2,STATUSMSG3, B_BLACK, F_WHITE,FALSE);
   window(screen1,(d_columns/2)-20,(d_rows/2)-5,(d_columns/2) + 20,(d_rows/2)+5,B_BLACK,F_WHITE,B_BLACK,1,0,0);
   dump_screen(screen1);
   listBox1= NULL; 
