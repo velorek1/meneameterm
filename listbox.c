@@ -99,8 +99,13 @@ void gotoIndex(LISTCHOICE ** aux, SCROLLDATA * scrollData,
 {
   LISTCHOICE *aux2;
   unsigned counter = 0;
-  *aux = listBox1;
+  //*aux = listBox1;
   aux2 = *aux;
+  //Make sure we are at the beginning of the list
+  while (aux2->index != 0){
+      if (aux2 == NULL) break;
+      aux2 = aux2->back;
+   }
   while(counter != indexAt) {
     aux2 = aux2->next;
     counter++;
