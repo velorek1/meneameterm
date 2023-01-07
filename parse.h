@@ -38,7 +38,6 @@ typedef struct _noticia{
 void creaArrayNoticias();
 int instr(char *srcStr, char *searchStr,  long offset, int xorstr );
 int cutstr(char *srcStr, char *resStr , size_t initPos, size_t endPos);
-void loadBuffer();
 
 #endif
 

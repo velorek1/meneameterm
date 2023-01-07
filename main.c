@@ -145,6 +145,9 @@ char lineStr[255];
 int strPtr=0;
 char ch=0;
 int k=0;
+  strcpy(titlestr, "");
+  strcpy(lineStr, "");
+
   sprintf(titlestr,"Noticia #%d:", story+1);
   if (screen2 != NULL) deleteList(&screen2);
   create_screen(&screen2);
@@ -153,11 +156,10 @@ int k=0;
   write_str(screen1,54,2,STATUSMSG3, B_BLACK, F_WHITE,FALSE);
   window(screen1,(d_columns/2)-20,(d_rows/2)-5,(d_columns/2) + 20,(d_rows/2)+5,B_BLACK,F_WHITE,B_BLACK,1,0,0);
   dump_screen(screen1);
-  //listBox1= NULL; 
   removeList(&listBox1);
   scrollData.displayMetrics=0;
   listBox1 = addatend(listBox1, newitem(titlestr));
-  strcpy(lineStr,"\0");
+  strcpy(lineStr,"");
   strPtr=0;
   do{
     for (k=0; k<39; k++){
@@ -165,7 +167,7 @@ int k=0;
 	  lineStr[k]=noticias[story].content[strPtr];
 	  strPtr++;
     }
-  
+   lineStr[k]='\0';
    // make sure we don't split words
    if (strlen(lineStr) > 38){
      if (noticias[story].content[strPtr] !=0x20 || noticias[story].content[strPtr+1] !=0x20 || noticias[story].content[strPtr-1] !=0x20){
@@ -175,15 +177,15 @@ int k=0;
                 lineStr[k]=0x20;
                 strPtr--;
         }
+       lineStr[k]='\0';
      }
    }
    listBox1 = addatend(listBox1, newitem(lineStr));
-   strcpy(lineStr,"\0");
+   strcpy(lineStr,"");
   } while (noticias[story].content[strPtr] != '\0');
 
   scrollData.selectorLimit=39;    //No. of chars per item displayed
   if (listBox1 != NULL) ch = listBox(listBox1, (d_columns/2)-18, (d_rows/2)-4, &scrollData, B_BLACK, F_WHITE, B_BLACK,F_YELLOW, 9, LOCKED);
-  //listBox1= NULL; 
   removeList(&listBox1);
   addItems(&listBox1);
   scrollData.displayMetrics=1;
