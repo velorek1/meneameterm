@@ -100,6 +100,7 @@ char unstr[28] = "[+] MENEAME PARA TERMINALES\0";
      globaltic++;
      if (globaltic ==28) globaltic=0;
      if (newsc_rows != d_rows || newsc_columns != d_columns) return -1;
+     return 0;
 }
 
 void clean_bars(){
