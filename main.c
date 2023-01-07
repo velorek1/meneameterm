@@ -153,7 +153,7 @@ int k=0;
   write_str(screen1,54,2,STATUSMSG3, B_BLACK, F_WHITE,FALSE);
   window(screen1,(d_columns/2)-20,(d_rows/2)-5,(d_columns/2) + 20,(d_rows/2)+5,B_BLACK,F_WHITE,B_BLACK,1,0,0);
   dump_screen(screen1);
-  listBox1= NULL; 
+  //listBox1= NULL; 
   removeList(&listBox1);
   scrollData.displayMetrics=0;
   listBox1 = addatend(listBox1, newitem(titlestr));
@@ -183,7 +183,7 @@ int k=0;
 
   scrollData.selectorLimit=39;    //No. of chars per item displayed
   if (listBox1 != NULL) ch = listBox(listBox1, (d_columns/2)-18, (d_rows/2)-4, &scrollData, B_BLACK, F_WHITE, B_BLACK,F_YELLOW, 9, LOCKED);
-  listBox1= NULL; 
+  //listBox1= NULL; 
   removeList(&listBox1);
   addItems(&listBox1);
   scrollData.displayMetrics=1;
@@ -205,7 +205,7 @@ char ch=0;
   write_str(screen1,54,2,"ESC|INTRO: VOLVER", B_BLACK, F_WHITE,FALSE);
   draw_window(screen1,(d_columns/2)-25,(d_rows/2)-6,(d_columns/2) + 25,(d_rows/2)+6,B_CYAN,F_BLACK,B_BLACK,1,0,1,0);
   dump_screen(screen1);
-  listBox1= NULL; 
+  //listBox1= NULL; 
   removeList(&listBox1);
   scrollData.displayMetrics=0;
   for (int i=0; i<HELP_LINES; i++){
@@ -213,7 +213,7 @@ char ch=0;
   }
   scrollData.selectorLimit=49;    //No. of chars per item displayed
   if (listBox1 != NULL) ch = listBox(listBox1, (d_columns/2)-23, (d_rows/2)-5, &scrollData, B_CYAN, F_BLACK, B_CYAN,F_WHITE, 11, LOCKED);
-  listBox1= NULL; 
+  //listBox1= NULL; 
   if (ch==ENDSIGNAL) status=ENDSIGNAL;
   removeList(&listBox1);
   addItems(&listBox1);

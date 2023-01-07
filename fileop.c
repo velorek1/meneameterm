@@ -63,9 +63,9 @@ if (res != 0) {
       fread(&ch, sizeof(ch), 1, file1);
     }
   }
-return byteCount;
 closeFile(file1);
 closeFile(file2);
+return byteCount;
 }	
 
 /*----------------------*/
