@@ -100,7 +100,6 @@ char unstr[28] = "[+] MENEAME PARA TERMINALES\0";
      globaltic++;
      if (globaltic ==28) globaltic=0;
      if (newsc_rows != d_rows || newsc_columns != d_columns) return -1;
-     return 0;
 }
 
 void clean_bars(){
@@ -146,9 +145,6 @@ char lineStr[255];
 int strPtr=0;
 char ch=0;
 int k=0;
-  strcpy(titlestr, "");
-  strcpy(lineStr, "");
-
   sprintf(titlestr,"Noticia #%d:", story+1);
   if (screen2 != NULL) deleteList(&screen2);
   create_screen(&screen2);
@@ -157,10 +153,11 @@ int k=0;
   write_str(screen1,54,2,STATUSMSG3, B_BLACK, F_WHITE,FALSE);
   window(screen1,(d_columns/2)-20,(d_rows/2)-5,(d_columns/2) + 20,(d_rows/2)+5,B_BLACK,F_WHITE,B_BLACK,1,0,0);
   dump_screen(screen1);
+  listBox1= NULL; 
   removeList(&listBox1);
   scrollData.displayMetrics=0;
   listBox1 = addatend(listBox1, newitem(titlestr));
-  strcpy(lineStr,"");
+  strcpy(lineStr,"\0");
   strPtr=0;
   do{
     for (k=0; k<39; k++){
@@ -168,7 +165,7 @@ int k=0;
 	  lineStr[k]=noticias[story].content[strPtr];
 	  strPtr++;
     }
-   lineStr[k]='\0';
+  
    // make sure we don't split words
    if (strlen(lineStr) > 38){
      if (noticias[story].content[strPtr] !=0x20 || noticias[story].content[strPtr+1] !=0x20 || noticias[story].content[strPtr-1] !=0x20){
@@ -178,15 +175,15 @@ int k=0;
                 lineStr[k]=0x20;
                 strPtr--;
         }
-       lineStr[k]='\0';
      }
    }
    listBox1 = addatend(listBox1, newitem(lineStr));
-   strcpy(lineStr,"");
+   strcpy(lineStr,"\0");
   } while (noticias[story].content[strPtr] != '\0');
 
   scrollData.selectorLimit=39;    //No. of chars per item displayed
   if (listBox1 != NULL) ch = listBox(listBox1, (d_columns/2)-18, (d_rows/2)-4, &scrollData, B_BLACK, F_WHITE, B_BLACK,F_YELLOW, 9, LOCKED);
+  listBox1= NULL; 
   removeList(&listBox1);
   addItems(&listBox1);
   scrollData.displayMetrics=1;
@@ -208,7 +205,7 @@ char ch=0;
   write_str(screen1,54,2,"ESC|INTRO: VOLVER", B_BLACK, F_WHITE,FALSE);
   draw_window(screen1,(d_columns/2)-25,(d_rows/2)-6,(d_columns/2) + 25,(d_rows/2)+6,B_CYAN,F_BLACK,B_BLACK,1,0,1,0);
   dump_screen(screen1);
-  //listBox1= NULL; 
+  listBox1= NULL; 
   removeList(&listBox1);
   scrollData.displayMetrics=0;
   for (int i=0; i<HELP_LINES; i++){
@@ -216,7 +213,7 @@ char ch=0;
   }
   scrollData.selectorLimit=49;    //No. of chars per item displayed
   if (listBox1 != NULL) ch = listBox(listBox1, (d_columns/2)-23, (d_rows/2)-5, &scrollData, B_CYAN, F_BLACK, B_CYAN,F_WHITE, 11, LOCKED);
-  //listBox1= NULL; 
+  listBox1= NULL; 
   if (ch==ENDSIGNAL) status=ENDSIGNAL;
   removeList(&listBox1);
   addItems(&listBox1);
@@ -340,7 +337,7 @@ int keypressed = 0;
     draw_screen();
     resetch();
      do{    
-         keypressed = kbhit();
+         keypressed = kbhit(10);
           
          get_terminal_dimensions(&newsc_rows,&newsc_columns);
 
@@ -368,7 +365,7 @@ int keypressed = 0;
 		   returnch=list();
 		   status=0;
                    if (returnch== ENDSIGNAL) {status = ENDSIGNAL; break;}
-                   if (returnch!=27) display_story(scrollData.itemIndex);  
+                   if ((returnch!=27) && (scrollData.itemIndex != -1)) display_story(scrollData.itemIndex);  
                    //draw_screen();
                    dump_screen(screen1);
 		   ch = 0;

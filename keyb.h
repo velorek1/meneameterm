@@ -53,13 +53,18 @@ Last modified: 14/04/2019 Rename Headers
 
 #define K_DELETE "\e[3~"
 
+#define K_CTRL_A 0x01
+#define K_CTRL_B 0x02
 #define K_CTRL_C 0x03
 #define K_CTRL_D 0x04
 #define K_CTRL_H 0x08
+#define K_CTRL_M 0x0D
 #define K_CTRL_J 0x0A
 #define K_CTRL_L 0x0C
+#define K_CTRL_S 0x13
 
 #define K_ALT_X "\ex"
+#define K_ALT_L "\el"
 #define K_ALT_S "\es"
 #define K_ALT_W "\ew"
 #define K_ALT_H "\eh"
@@ -83,5 +88,6 @@ Last modified: 14/04/2019 Rename Headers
 /*====================================================================*/
 
 int     read_keytrail(char chartrail[5]);
+int     read_accent(char *ch, char accentchar[2]);
 
 #endif

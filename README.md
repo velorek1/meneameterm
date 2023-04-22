@@ -17,7 +17,7 @@ In my last project in C I wanted to bring together everything I've learned with 
 For now it is a DEMO of what it could become. The program downloads the 100 news items that appear on the front page by making a CURL request to "https://meneame.net/api/list.php?status=published".
 
 It then parses the received data and displays it in a program with a retro text interface.
-Not my best or cleanest code intended to be used as a "demo", it is made with a lot of love, though :)
+Not my best or cleanest code intended to be used as a "demo". When you think you understand strings in C there is always a "Segmentation Fault" around the corner. But despite the countless "memory leaks" it is made with a lot of love :)
 
 The explanation of all the modules below:
 
@@ -32,7 +32,7 @@ _______________
 
 LEVEL 1: (DEPENDENCIES)
 - download.c : Depends on libcurl. We make the call to the meneame API and save its content in a file
-- parse.c : Parse the content of the file and dump it to an array (JSON). We remove the unicode sequences and parse Spanish accents
+- parse.c : Parse the content of the file and dump it to an array. We remove the unicode sequences and parse Spanish accents (WEAKEST LINK/MEMORY LEAKS)
 _______________
 
 LEVEL 2: (LOW LEVEL ABSTRACTIONS)

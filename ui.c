@@ -2,26 +2,25 @@
  * for a Text User Interface
  * TextBox
  * Window
- * Last modified: 09/10/2022
+ * Last modified: 15/04/2023
  * @author:velorek
  */
 #include <stdio.h>
 #include "rterm.h"
 #include "scbuf.h"
 #include "ui.h"
+#include "tm.h"
 #include "keyb.h"
 #include "global.h"
 /*----------------------------*/
 /* User Interface - Text Box. */
 /*----------------------------*/
-
 int textbox(SCREENCELL *newScreen,int wherex, int wherey, int displayLength,
         char *label, char text[MAX_TEXT], int backcolor,
         int labelcolor, int textcolor, BOOL raw, BOOL locked) {
   int     charCount = 0;
   int     exitFlag = 0;
   int     cursorON = 1;
-  long    cursorCount = 0;
   int     i;
   int     limitCursor = 0;
   int     positionx = 0;
@@ -31,8 +30,10 @@ int textbox(SCREENCELL *newScreen,int wherex, int wherey, int displayLength,
  // char    accentchar[2];
   char    displayChar;
   char    ch;
+  NTIMER  cursorTime;
   SCREENCELL *aux = newScreen;
  
+  init_timer(&cursorTime,150);
   positionx = wherex + strlen(label);
   limitCursor = wherex+strlen(label)+displayLength+1;
   write_str(aux,wherex, wherey, label, backcolor, labelcolor,raw);
@@ -44,17 +45,16 @@ int textbox(SCREENCELL *newScreen,int wherex, int wherey, int displayLength,
        textcolor,raw);
   if (raw != TRUE) dump_screen(aux);
   //Reset keyboard
-  if(kbhit() == 1) ch = readch();
+  if(kbhit(100) == 1) ch = readch();
   ch = 0;
 
   do {
 	 if (locked == 0) break;
-      keypressed = kbhit();
+      keypressed = kbhit(100);
     //Cursor Animation
    if (keypressed == 0){
-    cursorCount++;
-    if(cursorCount == 10000) {
-      cursorCount = 0;
+    
+    if (timerC(&cursorTime) == TRUE){
       switch (cursorON) {
     case 1:
       posCursor = positionx + 1;
@@ -108,6 +108,7 @@ int textbox(SCREENCELL *newScreen,int wherex, int wherey, int displayLength,
     }
     if (ch==K_BACKSPACE){
       if (positionx>0 && charCount>0){
+       ch=0;
        positionx--;
        charCount--;
        text[charCount] = '\0';
@@ -115,7 +116,7 @@ int textbox(SCREENCELL *newScreen,int wherex, int wherey, int displayLength,
        if (positionx < limitCursor-2) write_ch(aux,positionx + 2, wherey, '.', backcolor, textcolor,raw);
        //update_screen(aux);
        if (raw != TRUE) dump_screen(aux);
-       resetch();
+       //resetch();
       }
     }
     if(ch == K_ENTER || ch == K_TAB || ch == K_ESCAPE)
@@ -132,7 +133,7 @@ int textbox(SCREENCELL *newScreen,int wherex, int wherey, int displayLength,
   write_ch(aux,positionx + displayLength + 1, wherey, ']', backcolor,
        textcolor,raw);
  
-  resetch();
+  //resetch();
   return charCount;
 }
 
@@ -145,14 +146,17 @@ void window(SCREENCELL *screen1, int x1, int y1, int x2, int y2, int backcolor,
    values and map these chars to Unicode characters.
  */
   int     i, j;
-  char ch=0x20;
+  //char ch=0x20;
+  wchar_t ch=0x20;
   i = x1;
   j = y1;
   //shadow
   if (shadow==1){
-  for(j = y1 + 1; j <= y2 + 1; j++)
+   for(j = y1 + 1; j <= y2 + 1; j++)
     for(i = x1 + 1; i <= x2 + 1; i++)
     {
+      ch=read_char(screen1, i,j); //dynamic shadow
+      if ((ch=='\0')) ch=0x20;
       write_ch(screen1, i, j, ch, B_BLACK, F_WHITE,0);
     }
   }

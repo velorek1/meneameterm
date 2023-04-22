@@ -99,13 +99,8 @@ void gotoIndex(LISTCHOICE ** aux, SCROLLDATA * scrollData,
 {
   LISTCHOICE *aux2;
   unsigned counter = 0;
-  //*aux = listBox1;
+  *aux = listBox1;
   aux2 = *aux;
-  //Make sure we are at the beginning of the list
-  while (aux2->index != 0){
-      if (aux2 == NULL) break;
-      aux2 = aux2->back;
-   }
   while(counter != indexAt) {
     aux2 = aux2->next;
     counter++;
@@ -392,23 +387,27 @@ char selectorMenu(LISTCHOICE * aux, SCROLLDATA * scrollData) {
      break;
     }
     
-    keypressed = kbhit();
+    keypressed = kbhit(10);
     if (keypressed == 1)
     ch = readch();
     //if enter key pressed - break loop
     if(ch == K_ENTER)
       control = CONTINUE_SCROLL;	//Break the loop
 
-    if (ch==K_BACKSPACE) {break;} 
-    if (ch==K_CTRL_C) {break;}
+     if (ch == 'x' || ch == K_BACKSPACE || ch == K_CTRL_C){
+         double_escape=1;
+	 scrollData->itemIndex = -1;
+	  break;
+     }
+
     //Check arrow keys
     if(ch == K_ESCAPE)		// escape key
     {
       read_keytrail(chartrail);
-      if (strcmp(chartrail, "\e") == 0){
-	      double_escape=1;
-	      break;
-      }
+      //if (strcmp(chartrail, "\e") == 0){
+	//      double_escape=1;
+	  //    break;
+     // }
       if (strcmp(chartrail, K_ALT_X) == 0){
 	      break;
       }
@@ -539,10 +538,10 @@ if (locked == LOCKED) {
       printf("Current List Index: %d:%d\n", scrollData->currentListIndex,
 	     aux->index); */
       ch = selectorMenu(aux, scrollData);
-      if (ch==K_BACKSPACE) {locked=FALSE; break;} 
+      if (ch==K_BACKSPACE) {scrollData->itemIndex = -1; locked=FALSE; break;} 
       if (newrows != listrows || newcolumns != listcolumns) {locked=FALSE; break;}
       if (ch==K_CTRL_C) {locked=FALSE; return ENDSIGNAL;} 
-      if (double_escape==1) {locked=FALSE; break;} 
+      if (double_escape==1) {scrollData->itemIndex = -1; locked=FALSE; break;} 
     } while(ch != K_ENTER);
 
   } else {
