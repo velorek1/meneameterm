@@ -18,7 +18,7 @@
 #include "about.h"
 #define STATUSMSG1 "^v NAVEGAR LISTA | F1: AYUDA | i: IR A | ESC: SALIR\0"
 #define STATUSMSG2 "INTRO: VER NOTICIA | RETROCESO: VOLVER | CTRL-C: SALIR\0"
-#define STATUSMSG3  "ESC: VOLVER\0"
+#define STATUSMSG3  "ENTER: VOLVER\0"
 
 char texto[MAX_TEXT]; 
 //Prototypes
