@@ -14,23 +14,23 @@ Last modified: 31/10/2022
 
 typedef struct _noticia{
    int id;
-   char *permalink;
-   char *go;
-   char *url;
-   char *from;
-   char *status;
-   char *user;
+   //char *permalink;
+   //char *go;
+   //char *url;
+   //char *from;
+   //char *status;
+   //char *user;
    char clicks[255];
    char votes[255];
    char negatives[255]; 
    char karma[255];
    int comments;
    char title[255];
-   char *tags;
-   char *dates;
+   //char *tags;
+   //char *dates;
    char content[4096];
-   char *content_type;
-   char *source;
+   //char *content_type;
+   //char *source;
    char thumb;
 } NOTICIA;
 
@@ -38,7 +38,6 @@ typedef struct _noticia{
 void creaArrayNoticias();
 int instr(char *srcStr, char *searchStr,  long offset, int xorstr );
 int cutstr(char *srcStr, char *resStr , size_t initPos, size_t endPos);
-void loadBuffer();
 
 #endif
 
