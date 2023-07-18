@@ -205,6 +205,10 @@ void creaArrayNoticias(){
    //open JSON file 
    openFile(&fichero,FICHERO1,"r"); 
    byteCount = getfileSize(FICHERO1);
+   if (byteCount == 0) {
+     fprintf(stderr, "Failed to download file to create list.\n");
+     exit(0);
+   }
    //try with backup file
    if (fichero == NULL || byteCount == 0){
       closeFile(fichero);
