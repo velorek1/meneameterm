@@ -167,6 +167,7 @@ void update_ch(int x, int y, wchar_t ch, char backcolor, char forecolor) {
    gotoxy(x+1, y+1);
    outputcolor(forecolor, backcolor);
    if (ch>31) printf("%lc", ch);  //unicode
+   resetAnsi(0);
 }
 
 void write_ch(SCREENCELL *newScreen, int x, int y, wchar_t ch, char backcolor, char forecolor,BOOL raw) {
@@ -199,6 +200,7 @@ void write_ch(SCREENCELL *newScreen, int x, int y, wchar_t ch, char backcolor, c
          }
     }
   }
+  resetAnsi(0);
 }
 
 SCREENCELL read_cell(SCREENCELL *newScreen, int x, int y) {

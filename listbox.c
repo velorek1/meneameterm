@@ -31,6 +31,7 @@ int listrows=0, listcolumns=0;
 
 void tick2(void){
      char unstr[28] = "[+] MENEAME PARA TERMINALES";
+     resetAnsi(0);
      outputcolor(F_BLACK, B_YELLOW);
      for (int i=0;i<strlen(unstr); i++){
         gotoxy(54+i,1);
@@ -41,6 +42,7 @@ void tick2(void){
      printf("%c\n",unstr[globaltic2]);
      globaltic2++;
      if (globaltic2 ==27) globaltic2=0;
+     resetAnsi(0);
 }
 
 
@@ -180,6 +182,7 @@ void displayItem(LISTCHOICE * aux, SCROLLDATA * scrollData, int select)
 {
  int i=0;
  wchar_t newchar=0;
+  resetAnsi(0);
   switch (select) {
 
     case SELECT_ITEM:

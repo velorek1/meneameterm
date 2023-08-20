@@ -59,8 +59,9 @@ char ch=0;
      //write_str(screen1,3,1,TITLEMSG1, B_YELLOW, F_BLACK,FALSE);
      window(screen1,1,1,52,7,B_YELLOW,F_WHITE,B_WHITE,0,1,1);
      for (int i=0; i<6; i++){
-         write_str(screen1,2,i+1,about_msg[i], B_YELLOW, F_BLACK,FALSE);
+         write_str(screen1,2,i+1,about_msg[i], B_YELLOW, FH_WHITE,FALSE);
      }
+     resetAnsi(0);
      for (i=0;i<strlen(STATUSMSG1);i++){
 	     statuslimit=54+i;
         if (statuslimit <d_columns) write_ch(screen1,statuslimit,2,STATUSMSG1[i], B_BLACK, F_WHITE,FALSE);
@@ -113,6 +114,7 @@ char list() {
 int i=0;
 char ch=0;
   clean_bars();
+  resetAnsi(0);
   for (i=0;i<strlen(STATUSMSG2);i++){
 	     statuslimit=54+i;
         if (statuslimit <d_columns) write_ch(screen1,statuslimit,2,STATUSMSG2[i], B_BLACK, F_WHITE,FALSE);
@@ -121,7 +123,7 @@ char ch=0;
   //write_str(screen1,54,2,"INTRO: VER NOTICIA | RETROCESO: VOLVER | CTRL-C: SALIR ", B_BLACK, F_WHITE,FALSE);
   //write_str(screen1,53,1,"[+] MENEAME PARA TERMINALES ", B_YELLOW, F_WHITE,TRUE);
   dump_screen(screen1);
-  if (listBox1 != NULL) ch = listBox(listBox1, 8, 10, &scrollData, B_WHITE, F_BLACK, B_BLACK,F_WHITE, d_rows-7-6, LOCKED);
+  if (listBox1 != NULL) ch = listBox(listBox1, 8, 10, &scrollData, B_WHITE, F_BLACK, B_BLACK,FH_WHITE, d_rows-7-6, LOCKED);
   
   clean_bars();
      for (i=0;i<strlen(STATUSMSG1);i++){
@@ -151,7 +153,7 @@ int k=0;
   copy_screen(screen2,screen1);
   clean_bars();
   write_str(screen1,54,2,STATUSMSG3, B_BLACK, F_WHITE,FALSE);
-  window(screen1,(d_columns/2)-20,(d_rows/2)-5,(d_columns/2) + 20,(d_rows/2)+5,B_BLACK,F_WHITE,B_BLACK,1,0,0);
+  window(screen1,(d_columns/2)-20,(d_rows/2)-5,(d_columns/2) + 20,(d_rows/2)+5,B_BLACK,FH_WHITE,B_BLACK,1,0,0);
   dump_screen(screen1);
   listBox1= NULL; 
   removeList(&listBox1);
@@ -182,7 +184,7 @@ int k=0;
   } while (noticias[story].content[strPtr] != '\0');
 
   scrollData.selectorLimit=39;    //No. of chars per item displayed
-  if (listBox1 != NULL) ch = listBox(listBox1, (d_columns/2)-18, (d_rows/2)-4, &scrollData, B_BLACK, F_WHITE, B_BLACK,F_YELLOW, 9, LOCKED);
+  if (listBox1 != NULL) ch = listBox(listBox1, (d_columns/2)-18, (d_rows/2)-4, &scrollData, B_BLACK, FH_WHITE, B_BLACK,F_YELLOW, 9, LOCKED);
   listBox1= NULL; 
   removeList(&listBox1);
   addItems(&listBox1);
@@ -212,7 +214,7 @@ char ch=0;
     listBox1 = addatend(listBox1, newitem(help_msg[i]));
   }
   scrollData.selectorLimit=49;    //No. of chars per item displayed
-  if (listBox1 != NULL) ch = listBox(listBox1, (d_columns/2)-23, (d_rows/2)-5, &scrollData, B_CYAN, F_BLACK, B_CYAN,F_WHITE, 11, LOCKED);
+  if (listBox1 != NULL) ch = listBox(listBox1, (d_columns/2)-23, (d_rows/2)-5, &scrollData, B_CYAN, F_BLACK, B_CYAN,FH_WHITE, 11, LOCKED);
   listBox1= NULL; 
   if (ch==ENDSIGNAL) status=ENDSIGNAL;
   removeList(&listBox1);
