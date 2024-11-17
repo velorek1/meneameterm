@@ -15,6 +15,7 @@
 #define LOWER_LEFT_CORNER 9492
 #define UPPER_RIGHT_CORNER 9488
 #define LOWER_RIGHT_CORNER 9496
+#define UNICODEBAR1 0x2592
 
 typedef struct _screencell 
 { 
@@ -47,6 +48,7 @@ void write_ch(SCREENCELL *newScreen, int x, int y, wchar_t ch, char backcolor, c
 wchar_t read_char(SCREENCELL *newScreen, int x, int y);
 SCREENCELL read_cell(SCREENCELL *newScreen, int x, int y);
 void write_str(SCREENCELL *newScreen, int x, int y, char *str, char backcolor, char forecolor, BOOL raw);
+void update_str(int x, int y, char *str, char backcolor, char forecolor);
 int write_num(SCREENCELL *newScreen, int x, int y, int num, char backcolor,
 	       char forecolor, BOOL raw);
 void screen_color(SCREENCELL *newScreen, char bcolor, char fcolor, wchar_t ch);

@@ -132,8 +132,8 @@ int create_screen(SCREENCELL **newScreen){
        temp.foreColor = F_WHITE; 
      for(i = 0; i < buffersize; i++) {
       //Except for their index
-      temp.index = i;
-      *aux = addend(*aux, newelement(temp)); 
+      temp.index = buffersize - 1 - i;
+      *aux = addfront(*aux, newelement(temp)); 
      }
      return 1; 
    } else{
@@ -164,10 +164,10 @@ void copy_screen(SCREENCELL *destination,SCREENCELL *source){
 /*------------------------------------------*/
 void update_ch(int x, int y, wchar_t ch, char backcolor, char forecolor) {
 //Write Unicode char to screen raw
+   resetAnsi(0);
    gotoxy(x+1, y+1);
    outputcolor(forecolor, backcolor);
-   if (ch>31) printf("%lc", ch);  //unicode
-   resetAnsi(0);
+   printf("%lc", ch);  //unicode
 }
 
 void write_ch(SCREENCELL *newScreen, int x, int y, wchar_t ch, char backcolor, char forecolor,BOOL raw) {
@@ -175,7 +175,8 @@ void write_ch(SCREENCELL *newScreen, int x, int y, wchar_t ch, char backcolor, c
   int     i, pos;
 
   SCREENCELL *aux = newScreen;
-  if (aux != NULL && buffersize <= length(&aux) && ch>31){
+  resetAnsi(0);
+  if (aux != NULL && buffersize <= length(&aux)){
 
     pos = (y - 1) * sc_columns + x;   //This is the formula to calculate the position index in the screen buffer
     if(pos < buffersize) {
@@ -200,7 +201,6 @@ void write_ch(SCREENCELL *newScreen, int x, int y, wchar_t ch, char backcolor, c
          }
     }
   }
-  resetAnsi(0);
 }
 
 SCREENCELL read_cell(SCREENCELL *newScreen, int x, int y) {
@@ -270,6 +270,25 @@ void write_str(SCREENCELL *newScreen, int x, int y, char *str, char backcolor, c
  }
 }
 
+/*------------------------------------------*/
+/* Writes a string of characters to screen. */
+/*------------------------------------------*/
+
+void update_str(int x, int y, char *str, char backcolor, char forecolor) {
+  //Writes a string of characters to buffer.
+  char   *astr=NULL;
+  size_t     i=0;
+  int wherex=0;
+
+    resetAnsi(0);
+    wherex = x;
+    astr = str;
+    for(i = 0; i <= strlen(str) - 1; i++) {
+      update_ch(wherex, y, astr[i], backcolor, forecolor);
+      wherex = wherex + 1;
+    }
+}
+
 /*-----------------------------------------------*/
 /* Writes an integer value as a string on screen */
 /*-----------------------------------------------*/
@@ -293,7 +312,7 @@ void screen_color(SCREENCELL *newScreen, char bcolor, char fcolor, wchar_t ch) {
 /* Changes the color of all the cells to create the effect of changing color in the background */
   int     i=0;
   SCREENCELL *aux=newScreen;
-  
+  resetAnsi(0);
   //screen should be updated twice to get round the last row glitch
   if (aux != NULL && buffersize <= length(&aux)){ 
    for(i = 0; i < buffersize; i++) {
@@ -351,7 +370,7 @@ void update_screen(SCREENCELL *newScreen) {
 
 
 void xor_update(SCREENCELL *screen1, SCREENCELL *screen2) {
-/* UPDATES ALL SCREEN CELLS TO DISPLAY */
+/* UPDATE only the cells that are different */
   int     i=0;
   int     wherex=0, wherey=0;
   SCREENCELL *aux1=screen1;
@@ -374,34 +393,36 @@ void xor_update(SCREENCELL *screen1, SCREENCELL *screen2) {
 }
 
 
-void xor_copy(SCREENCELL *screen1, SCREENCELL *screen2) {
+void xor_copy(SCREENCELL *screen1, SCREENCELL *screen2)
+{
 /* UPDATES ALL SCREEN CELLS TO DISPLAY */
-  int     i=0;
-  int     wherex=0, wherey=0;
-  SCREENCELL *aux1=screen1;
-  SCREENCELL *aux2=screen2;
-  if ((aux1!=NULL && aux2!=NULL) && (length(&aux1) == length(&aux2))){
-     for(i = 0; i < buffersize; i++) {
+	int i = 0;
+	int wherex = 0, wherey = 0;
+	SCREENCELL *aux1 = screen1;
+	SCREENCELL *aux2 = screen2;
+	if ((aux1 != NULL && aux2 != NULL) && (length(&aux1) == length(&aux2))) {
+		for (i = 0; i < buffersize; i++) {
 
-       if (aux1->ch != aux2->ch || aux1-> backColor != aux2 -> backColor || aux1-> foreColor != aux2 -> foreColor) { 
-           aux1->ch = aux2->ch;
-           aux1->backColor = aux2->backColor;
-           aux1->foreColor = aux2->foreColor;
-           wherex = wherex + 1; //line counter
+			if (aux1->ch != aux2->ch
+			    || aux1->backColor != aux2->backColor
+			    || aux1->foreColor != aux2->foreColor) {
+				aux1->ch = aux2->ch;
+				aux1->backColor = aux2->backColor;
+				aux1->foreColor = aux2->foreColor;
+				wherex = wherex + 1;	//line counter
 
-           if(wherex == sc_columns) {
-              //new line
-              wherex = 0;
-              wherey = wherey + 1;
-            }
+				if (wherex == sc_columns) {
+					//new line
+					wherex = 0;
+					wherey = wherey + 1;
+				}
 
-           aux1 = aux1->next;
-           aux2 = aux2->next;
-      }
-    }
-   }
+				aux1 = aux1->next;
+				aux2 = aux2->next;
+			}
+		}
+	}
 }
-
 /*------------------------------------------*/
 /* Draw window area with or without border. */
 /*------------------------------------------*/
@@ -416,12 +437,15 @@ void draw_window(SCREENCELL *newScreen, int x1, int y1, int x2, int y2, int back
   i = x1;
   j = y1;
   //shadow
+  resetAnsi(0);
   if (shadow == TRUE){
   for(j = y1 + 1; j <= y2 + 1; j++)
     for(i = x1 + 1; i <= x2 + 1; i++)
     {
       ch=read_char(aux, i,j); //dynamic shadow
-      if (ch=='\0') ch=FILL_CHAR;
+      if ((ch=='\0') || (ch == UNICODEBAR1) || (ch<0)) ch=FILL_CHAR;
+      //ch=FILL_CHAR;
+      //if (ch<0) ch = (tempLine.linea[i].specialChar << 8) | tempLine.linea[i].ch;
       write_ch(aux, i, j, ch, B_BLACK, F_WHITE,raw);
     }
   }

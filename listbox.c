@@ -27,7 +27,7 @@ NTIMER timer2;
 int globaltic2=0;
 int newrows = 0, newcolumns = 0;
 int listrows = 0, listcolumns = 0;
-void tick2(void){
+int tick2(void){
      char unstr[28] = "[+] MENEAME PARA TERMINALES";
      resetAnsi(0);
      outputcolor(F_BLACK, B_YELLOW);
@@ -41,6 +41,11 @@ void tick2(void){
      globaltic2++;
      if (globaltic2 ==27) globaltic2=0;
      resetAnsi(0);
+    if (newrows != listrows || newcolumns != listcolumns)
+		return -1;
+	else
+		return 0;
+
 }
 
 /* --------------------- */
@@ -374,7 +379,13 @@ char selectorMenu(LISTCHOICE *aux, SCROLLDATA *scrollData)
       		if (timerC(&timer2) == TRUE){
 	      		//Animation
               		get_terminal_dimensions(&newrows,&newcolumns);
-              		tick2();
+              		if (tick2() == -1){
+				double_escape = 1;
+			       scrollData->itemIndex = -1;
+			        break;
+				//animation that checks screen changes
+
+			}
      		}
     		if (newrows != listrows || newcolumns != listcolumns){
      			break;
@@ -548,11 +559,11 @@ char listBox(LISTCHOICE *head,
 					locked = FALSE;
 					break;
 				}
-				/*if (_animation() == -1) {
-					scrollData->itemIndex = -1;
-					double_escape = 1;
-					break;
-				} */
+			//	if (_animation() == -1) {
+			//		scrollData->itemIndex = -1;
+			//		double_escape = 1;
+			//		break;
+			//	} 
 			} while (ch != K_ENTER);
 
 		} else {
