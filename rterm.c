@@ -204,5 +204,6 @@ void close_term(){
   //screencol(B_BLACK);
   resetAnsi(0);
   printf("%c[2J\r", 0x1b);
+  gotoxy(0,0);
 }
 
