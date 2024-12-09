@@ -53,6 +53,7 @@ int download(void) {
    }
     
     outputcolor(B_BLACK,F_YELLOW);
+    resetAnsi(3);
     printf("\r[+] Cargando....\n");
 
     return 0;

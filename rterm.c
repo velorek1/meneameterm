@@ -200,9 +200,9 @@ void init_term(){
 void close_term(){
   showcursor();
   resetTerm();
-  outputcolor(F_WHITE, B_BLACK);
-  screencol(B_BLACK);
+  //outputcolor(F_WHITE, B_BLACK);
+  //screencol(B_BLACK);
   resetAnsi(0);
-  printf("\n");
+  printf("%c[2J\r", 0x1b);
 }
 
