@@ -205,6 +205,20 @@ void displayItem(LISTCHOICE *aux, SCROLLDATA *scrollData, int select)
 			} else
 				printf("%c", 0x20);
 		}
+	//if (scrollData->displayMetrics==1){
+        gotoxy(4,8);
+        outputcolor(F_YELLOW, B_BLACK);
+        printf("Votes: %s |", noticias[aux->index].votes);
+        gotoxy(16,8);
+        outputcolor(F_CYAN, B_BLACK);
+        printf("Clicks: %s |", noticias[aux->index].clicks);
+        gotoxy(30,8);
+        outputcolor(F_RED, B_BLACK);
+        printf("(-): %s |", noticias[aux->index].negatives);
+        gotoxy(40,8);
+        outputcolor(F_MAGENTA, B_BLACK);
+        printf("Karma: %s", noticias[aux->index].karma); 
+      //}
 		printf("\n");
 		break;
 
@@ -222,6 +236,9 @@ void displayItem(LISTCHOICE *aux, SCROLLDATA *scrollData, int select)
 
 		}
 		printf("\n");
+	gotoxy(4,8);
+        outputcolor(F_BLACK, B_BLACK);
+        printf("                                          ");	
 		break;
 	}
 }

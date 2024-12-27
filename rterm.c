@@ -203,7 +203,6 @@ void close_term(){
   //outputcolor(F_WHITE, B_BLACK);
   //screencol(B_BLACK);
   resetAnsi(0);
-  printf("%c[2J\r", 0x1b);
-  gotoxy(0,0);
+  printf("\033[2J\033[H");
 }
 
