@@ -205,7 +205,7 @@ void displayItem(LISTCHOICE *aux, SCROLLDATA *scrollData, int select)
 			} else
 				printf("%c", 0x20);
 		}
-	//if (scrollData->displayMetrics==1){
+	if (scrollData->displayMetrics==1){
         gotoxy(4,8);
         outputcolor(F_YELLOW, B_BLACK);
         printf("Votes: %s |", noticias[aux->index].votes);
@@ -218,7 +218,7 @@ void displayItem(LISTCHOICE *aux, SCROLLDATA *scrollData, int select)
         gotoxy(40,8);
         outputcolor(F_MAGENTA, B_BLACK);
         printf("Karma: %s", noticias[aux->index].karma); 
-      //}
+      }
 		printf("\n");
 		break;
 
