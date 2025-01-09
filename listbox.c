@@ -236,10 +236,12 @@ void displayItem(LISTCHOICE *aux, SCROLLDATA *scrollData, int select)
 
 		}
 		printf("\n");
-	gotoxy(4,8);
-        outputcolor(F_BLACK, B_BLACK);
-        printf("                                          ");	
-		break;
+	if (scrollData->displayMetrics==1){
+	  gotoxy(4,8);
+          outputcolor(F_BLACK, B_BLACK);
+          printf("                                          ");	
+	 }
+	break;
 	}
 }
 
