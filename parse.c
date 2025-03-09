@@ -188,7 +188,6 @@ long extractContent(char *tempBfr, char *searchStr, char *endPattern, char *dump
   return cut1;
 }
 
-
 void creaArrayNoticias(){
   long pos2=0;
   char endquotes[4]={0,0,0,0};
@@ -209,6 +208,12 @@ void creaArrayNoticias(){
      fprintf(stderr, "Failed to download file to create list.\n");
      exit(0);
    }
+   if (byteCount < 14000){
+     fprintf(stderr, "MENEAME API has not responded as expected. Resorting to demo file.\n");
+     closeFile(fichero);
+     openFile(&fichero,DEMOFILE,"r"); 
+     byteCount = getfileSize(DEMOFILE);
+   }
    //try with backup file
    if (fichero == NULL || byteCount == 0){
       closeFile(fichero);
@@ -224,6 +229,7 @@ void creaArrayNoticias(){
    
    bufferText = (char *) malloc((byteCount + 1) * sizeof(char));
    strcpy(bufferText, "");
+   
    if(fichero != NULL) {
     rewind(fichero);	//Go to start of file
     ch = getc(fichero);	//peek into file
