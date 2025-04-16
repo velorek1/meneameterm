@@ -2,7 +2,10 @@
 Meneame.net for Linux Terminals
 
 * Remember to install libcurl and libcurl-dev libraries to compile.
-⚠️ Important Notice: Meneame appears to have increased its security via Cloudflare, which now blocks automated access to their API. As a result, this program is no longer functional as intended. However, a demo remains available for reference purposes.
+### ⚠️ **Important Notice**
+
+**Meneame appears to have increased its security via Cloudflare**, which now blocks automated access to their API. As a result, this program is no longer functional as intended. However, a demo remains available for reference purposes.
+
   
 TO COMPILE and RUN:  
 
