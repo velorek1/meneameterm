@@ -189,6 +189,8 @@ void showcursor() {
 //For code simplification purposes
 
 void init_term(){
+  //change to alternate screen
+  printf("\033[?1049h");
   hidecursor();
   pushTerm();
   resetch();
@@ -203,6 +205,8 @@ void close_term(){
   //outputcolor(F_WHITE, B_BLACK);
   //screencol(B_BLACK);
   resetAnsi(0);
-  printf("\033[2J\033[H");
+  //restore previous screen
+  printf("\033[?1049l");
+
 }
 
