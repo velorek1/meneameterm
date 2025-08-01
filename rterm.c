@@ -207,6 +207,8 @@ void close_term(){
   resetAnsi(0);
   //restore previous screen
   printf("\033[?1049l");
+  gotoxy(0,0);
+  printf("%c[2J\r", 0x1b);
 
 }
 
